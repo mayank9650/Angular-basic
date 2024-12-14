@@ -17,4 +17,12 @@ export class ShoppingListComponent {
       amount: 15,
     },
   ];
+
+  onAdd(ingredient: Ingredient) {
+    this.ingredients.push(ingredient);
+  }
+
+  onMouseLeave() {
+    console.log('en222');
+  }
 }

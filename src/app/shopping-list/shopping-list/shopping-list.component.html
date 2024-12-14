@@ -1,6 +1,8 @@
-<div class="row">
+<div class="row" (mouseleave)="onMouseLeave()">
   <div class="col-xs-10">
-    <app-shopping-list-edit></app-shopping-list-edit>
+    <app-shopping-list-edit
+      (addNewItem)="onAdd($event)"
+    ></app-shopping-list-edit>
     <hr />
     <ul class="list-group">
       <a
