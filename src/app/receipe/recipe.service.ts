@@ -13,12 +13,32 @@ export class RecipeService {
       description: 'This is simply a test',
       imagePath:
         'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505',
+      ingredients: [
+        {
+          name: 'Potatoes',
+          amount: 10,
+        },
+        {
+          name: 'Bread',
+          amount: 2,
+        },
+      ],
     },
     {
       name: 'Noodles Recipe',
       description: 'This is sample noodles recipe',
       imagePath:
         'https://static.vecteezy.com/system/resources/previews/043/290/966/non_2x/fresh-spaghetti-with-pesto-and-cherry-tomatoes-photo.jpg',
+      ingredients: [
+        {
+          name: 'Tomatoes',
+          amount: 10,
+        },
+        {
+          name: 'Burger',
+          amount: 2,
+        },
+      ],
     },
   ];
 
@@ -30,13 +50,12 @@ export class RecipeService {
     return this.recipes;
   }
 
-  addRecipes(newRecipe: Recipe){
-    this.recipes.push(newRecipe)
+  addRecipes(newRecipe: Recipe) {
+    this.recipes.push(newRecipe);
   }
 
-  setSelectedRecipe(selectedItem: Recipe){
-    this.selectedRecipe = selectedItem
-    this.selectedServiceChangedEvent.emit()
+  setSelectedRecipe(selectedItem: Recipe) {
+    this.selectedRecipe = selectedItem;
+    this.selectedServiceChangedEvent.emit();
   }
-
 }

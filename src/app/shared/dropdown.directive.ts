@@ -1,4 +1,10 @@
-import { Directive, ElementRef, HostBinding, HostListener, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
   selector: '[appDropdown]',
@@ -14,7 +20,7 @@ export class DropdownDirective {
     } else {
       this.renderer.addClass(this.elementRef.nativeElement, 'open');
     }
-    
+
     // this.isOpen = this.elementRef.nativeElement.contains(event.target)
     //   ? !this.isOpen
     //   : false;
