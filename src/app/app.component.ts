@@ -6,13 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  showRecipe = true;
+  // showRecipe = true;
 
   onHeaderTabClicked(clickedTab: string) {
-    if(clickedTab === 'recipe'){
-      this.showRecipe = true
-    } else {
-      this.showRecipe = false
-    }
+    // if(clickedTab === 'recipe'){
+    //   this.showRecipe = true
+    // } else {
+    //   this.showRecipe = false
+    // }
   }
 }

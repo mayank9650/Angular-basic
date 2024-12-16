@@ -2,10 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-       <app-receipe *ngIf="showRecipe; else shoppingList"></app-receipe>
-       <ng-template #shoppingList>
-         <app-shopping-list></app-shopping-list>
-       </ng-template>
+       <router-outlet></router-outlet>
     </div>
   </div>
 </div>

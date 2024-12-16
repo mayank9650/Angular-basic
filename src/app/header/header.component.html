@@ -5,9 +5,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#" (click)="onTabClick('recipe')">Recipes</a></li>
+        <li><a [routerLink]="['/']" (click)="onTabClick('recipe')">Recipes</a></li>
         <li>
-          <a href="#" (click)="onTabClick('shoppingList')">Shopping List</a>
+          <a [routerLink]="['/shopping-list']" (click)="onTabClick('shoppingList')">Shopping List</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

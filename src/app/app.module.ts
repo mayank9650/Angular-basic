@@ -14,6 +14,8 @@ import { ReceipeComponent } from './receipe/receipe.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { RecipeService } from './receipe/recipe.service';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './appRoutes';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
   imports: [
     BrowserModule,
     FormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [RecipeService, ShoppingListService],
   bootstrap: [AppComponent]
