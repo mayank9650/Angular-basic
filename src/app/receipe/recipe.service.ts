@@ -9,6 +9,7 @@ export class RecipeService {
 
   private recipes: Recipe[] = [
     {
+      id: '1',
       name: 'A Test Recipe',
       description: 'This is simply a test',
       imagePath:
@@ -25,6 +26,7 @@ export class RecipeService {
       ],
     },
     {
+      id: '2',
       name: 'Noodles Recipe',
       description: 'This is sample noodles recipe',
       imagePath:
@@ -52,6 +54,10 @@ export class RecipeService {
 
   addRecipes(newRecipe: Recipe) {
     this.recipes.push(newRecipe);
+  }
+
+  getRecipeById(id: string): Recipe {
+    return this.recipes.find((item) => item.id === id);
   }
 
   setSelectedRecipe(selectedItem: Recipe) {

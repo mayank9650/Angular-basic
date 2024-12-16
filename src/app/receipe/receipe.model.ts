@@ -1,8 +1,9 @@
-import { Ingredient } from "../shared/ingredient.model";
+import { Ingredient } from '../shared/ingredient.model';
 
 export interface Recipe {
-    name: string;
-    description: string;
-    imagePath: string;
-    ingredients: Ingredient[]
+  id: string;
+  name: string;
+  description: string;
+  imagePath: string;
+  ingredients: Ingredient[];
 }
