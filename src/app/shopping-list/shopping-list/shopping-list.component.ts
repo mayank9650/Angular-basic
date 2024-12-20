@@ -32,4 +32,8 @@ export class ShoppingListComponent {
   onMouseLeave() {
     console.log('en222');
   }
+
+  onListItemClick(index: number){
+    this.shoppingListService.onSelectedListItemClick(index)
+  }
 }
