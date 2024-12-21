@@ -82,4 +82,13 @@ export class RecipeService {
     this.recipes = this.recipes.filter((item) => item.id !== id);
     this.recipesChanged.next();
   }
+
+  setRecipes(recipeList: Recipe[]) {
+    if (recipeList.length) {
+      this.recipes = [...recipeList];
+    } else {
+      this.recipes = [...this.recipes, ...recipeList];
+    }
+    this.recipesChanged.next();
+  }
 }
