@@ -23,7 +23,7 @@ export class RecipeDetailComponent {
     this.activatedRoute.params.subscribe({
       next: (params) => {
         this.selectedRecipe = this.recipeService.getRecipeById(params.id);
-        this.selectedId = params.id
+        this.selectedId = params.id;
       },
     });
   }
@@ -35,8 +35,13 @@ export class RecipeDetailComponent {
     );
   }
 
-  editRecipe(){
+  editRecipe() {
     // this.router.navigate(['/recipes', this.selectedId, 'edit'])
-    this.router.navigate(['edit'], {relativeTo: this.activatedRoute})
+    this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
+  }
+
+  recipeDelete(){
+    this.recipeService.deleteRecipe(this.selectedId);
+    this.router.navigate(['recipes'])
   }
 }

@@ -10,10 +10,17 @@ import { Router } from '@angular/router';
 })
 export class RecipeListComponent {
   constructor(private recipeService: RecipeService, private route: Router) {}
+  recipes: Recipe[] = this.recipeService.getRecipes();
 
-  recipes = this.recipeService.getRecipes();
+  ngOnInit() {
+    this.recipeService.recipesChanged.subscribe({
+      next: () => {
+        this.recipes = this.recipeService.getRecipes();
+      },
+    });
+  }
 
-  addNewRecipe(){
-    this.route.navigate(['recipes/new'])
+  addNewRecipe() {
+    this.route.navigate(['recipes/new']);
   }
 }

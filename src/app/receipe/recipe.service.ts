@@ -48,6 +48,7 @@ export class RecipeService {
   selectedRecipe: Recipe;
 
   selectedServiceChangedEvent = new Subject<any>();
+  recipesChanged = new Subject<any>();
 
   getRecipes() {
     return this.recipes;
@@ -55,6 +56,7 @@ export class RecipeService {
 
   addRecipes(newRecipe: Recipe) {
     this.recipes.push(newRecipe);
+    this.recipesChanged.next();
   }
 
   getRecipeById(id: string): Recipe {
@@ -64,5 +66,20 @@ export class RecipeService {
   setSelectedRecipe(selectedItem: Recipe) {
     this.selectedRecipe = selectedItem;
     this.selectedServiceChangedEvent.next();
+  }
+
+  updateRecipe(id: string, newRecipe: Recipe) {
+    this.recipes = this.recipes.map((item) => {
+      if (item.id === id) {
+        return newRecipe;
+      }
+      return item;
+    });
+    this.recipesChanged.next();
+  }
+
+  deleteRecipe(id: string) {
+    this.recipes = this.recipes.filter((item) => item.id !== id);
+    this.recipesChanged.next();
   }
 }
