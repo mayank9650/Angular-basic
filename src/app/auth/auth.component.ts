@@ -22,20 +22,39 @@ export class AuthComponent {
     console.log('auth', this.authForm);
     const formValues = this.authForm.value;
     this.isLoading = true;
-    this.authServie
-      .signUp({
-        email: formValues.email,
-        password: formValues.password,
-      })
-      .subscribe({
-        next: (response) => {
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.error = error;
-        },
-      });
+
+    if (this.isLoginMode) {
+      this.authServie
+        .logIn({
+          email: formValues.email,
+          password: formValues.password,
+        })
+        .subscribe({
+          next: (response) => {
+            console.log('response', response)
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.error = error;
+          },
+        });
+    } else {
+      this.authServie
+        .signUp({
+          email: formValues.email,
+          password: formValues.password,
+        })
+        .subscribe({
+          next: (response) => {
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.error = error;
+          },
+        });
+    }
     this.authForm.reset();
   }
 }
