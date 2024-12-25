@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list/shopping-list.component';
@@ -18,8 +17,10 @@ import { AppRoutingModule } from './app-routing.modules';
 import { EmptyRecipeComponent } from './receipe/empty-recipe/empty-recipe.component';
 import { RecipeEditComponent } from './receipe/recipe-edit/recipe-edit.component';
 import { DataStorageService } from './shared/data-storage.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
+import { AuthServiceService } from './auth/auth-service.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -34,16 +35,26 @@ import { AuthComponent } from './auth/auth.component';
     DropdownDirective,
     EmptyRecipeComponent,
     RecipeEditComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [RecipeService, ShoppingListService, DataStorageService],
-  bootstrap: [AppComponent]
+  providers: [
+    RecipeService,
+    ShoppingListService,
+    DataStorageService,
+    AuthServiceService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

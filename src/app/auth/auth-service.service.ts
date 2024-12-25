@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
@@ -19,7 +19,7 @@ export interface SignUpResponse {
 export class AuthServiceService {
   constructor(private httpClient: HttpClient) {}
 
-  userSubject = new Subject<User>();
+  userSubject = new BehaviorSubject<User>(null);
 
   signUp({ email, password }) {
     return this.httpClient
@@ -55,6 +55,10 @@ export class AuthServiceService {
         catchError((errorRes) => this.handleError(errorRes)),
         tap((res) => this.authHandler(res))
       );
+  }
+
+  logout() {
+    this.userSubject.next(null);
   }
 
   private authHandler(responseData: SignUpResponse) {
