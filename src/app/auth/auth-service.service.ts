@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
@@ -19,7 +19,7 @@ export interface SignUpResponse {
 export class AuthServiceService {
   constructor(private httpClient: HttpClient) {}
 
-  userSubject =  new Subject<User>();
+  userSubject = new Subject<User>();
 
   signUp({ email, password }) {
     return this.httpClient
@@ -39,7 +39,7 @@ export class AuthServiceService {
       );
   }
 
-  logIn({ email, password }) {
+  logIn({ email, password }): Observable<SignUpResponse> {
     return this.httpClient
       .post<SignUpResponse>(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAs3Zgr7ywOjnXf2h9A1Nw8DgEiiT1e8xM

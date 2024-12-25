@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthServiceService } from './auth-service.service';
+import { AuthServiceService, SignUpResponse } from './auth-service.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs-compat';
 
 @Component({
   selector: 'app-auth',
@@ -14,16 +16,18 @@ export class AuthComponent implements OnInit, OnDestroy {
   error = null;
   userSub: Subscription;
 
-  constructor(private authServie: AuthServiceService) {}
+  constructor(private authServie: AuthServiceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.userSub = this.authServie.userSubject.subscribe({next: (user) => {
-      console.log('user', user)
-    }})
+    this.userSub = this.authServie.userSubject.subscribe({
+      next: (user) => {
+        console.log('user', user);
+      },
+    });
   }
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe()
+    this.userSub.unsubscribe();
   }
 
   onModeSwitch() {
@@ -34,39 +38,29 @@ export class AuthComponent implements OnInit, OnDestroy {
     console.log('auth', this.authForm);
     const formValues = this.authForm.value;
     this.isLoading = true;
-
+    let authObs: Observable<SignUpResponse>;
     if (this.isLoginMode) {
-      this.authServie
-        .logIn({
-          email: formValues.email,
-          password: formValues.password,
-        })
-        .subscribe({
-          next: (response) => {
-            console.log('response', response)
-            this.isLoading = false;
-          },
-          error: (error) => {
-            this.isLoading = false;
-            this.error = error;
-          },
-        });
+      authObs = this.authServie.logIn({
+        email: formValues.email,
+        password: formValues.password,
+      });
     } else {
-      this.authServie
-        .signUp({
-          email: formValues.email,
-          password: formValues.password,
-        })
-        .subscribe({
-          next: (response) => {
-            this.isLoading = false;
-          },
-          error: (error) => {
-            this.isLoading = false;
-            this.error = error;
-          },
-        });
+      authObs = this.authServie.signUp({
+        email: formValues.email,
+        password: formValues.password,
+      });
     }
+    authObs.subscribe({
+      next: (response) => {
+        console.log('response', response);
+        this.isLoading = false;
+        this.router.navigate(['/recipes']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.error = error;
+      },
+    });
     this.authForm.reset();
   }
 }

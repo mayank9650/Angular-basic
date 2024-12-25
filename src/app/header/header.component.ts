@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { DataStorageService } from '../shared/data-storage.service';
+import { AuthServiceService } from '../auth/auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,21 @@ import { DataStorageService } from '../shared/data-storage.service';
 export class HeaderComponent {
   selectedTab = '';
   @Output() tabClicked: EventEmitter<string> = new EventEmitter<string>();
+  isAuthenticated = false;
 
-  constructor(private dataService: DataStorageService) {}
+  constructor(
+    private dataService: DataStorageService,
+    private authService: AuthServiceService
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.userSubject.subscribe({
+      next: (user) => {
+        this.isAuthenticated = user.token !== null;
+        console.log('user', user);
+      },
+    });
+  }
 
   onTabClick(clickedTab: string) {
     this.selectedTab = clickedTab;
@@ -21,7 +35,7 @@ export class HeaderComponent {
     this.dataService.saveRecipe();
   }
 
-  fetchRecipeData(){
-    this.dataService.fetchRecipeList().subscribe()
+  fetchRecipeData() {
+    this.dataService.fetchRecipeList().subscribe();
   }
 }
