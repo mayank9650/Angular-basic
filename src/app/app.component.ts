@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { AuthServiceService } from './auth/auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,9 @@ import { Observable, Subscription } from 'rxjs';
 export class AppComponent {
   // showRecipe = true;
   subscription: Subscription;
+
+  constructor(private authService: AuthServiceService){}
+
   onHeaderTabClicked(clickedTab: string) {
     // if(clickedTab === 'recipe'){
     //   this.showRecipe = true
@@ -35,6 +39,8 @@ export class AppComponent {
     //     console.log('count', count);
     //   },
     // });
+
+    this.authService.autoLogin()
   }
 
   ngOnDestroy(){

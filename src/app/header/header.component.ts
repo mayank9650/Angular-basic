@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthServiceService } from '../auth/auth-service.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,14 +14,12 @@ export class HeaderComponent {
 
   constructor(
     private dataService: DataStorageService,
-    private authService: AuthServiceService,
-    private router: Router
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
     this.authService.userSubject.subscribe({
       next: (user) => {
-        console.log('user', user);
         this.isAuthenticated = !!user;
       },
     });
@@ -43,6 +40,5 @@ export class HeaderComponent {
 
   onLogoutClick() {
     this.authService.logout();
-    this.router.navigate(['/auth']);
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface SignUpResponse {
   idToken: string;
@@ -17,7 +18,7 @@ export interface SignUpResponse {
   providedIn: 'root',
 })
 export class AuthServiceService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   userSubject = new BehaviorSubject<User>(null);
 
@@ -59,6 +60,23 @@ export class AuthServiceService {
 
   logout() {
     this.userSubject.next(null);
+    this.router.navigate(['/auth']);
+  }
+
+  autoLogin() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return;
+    }
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if(loadedUser.token){
+      return this.userSubject.next(loadedUser)
+    }
   }
 
   private authHandler(responseData: SignUpResponse) {
@@ -71,6 +89,7 @@ export class AuthServiceService {
       responseData.idToken,
       expirationDate
     );
+    localStorage.setItem('userData', JSON.stringify(user));
     this.userSubject.next(user);
   }
 
