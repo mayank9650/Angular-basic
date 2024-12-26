@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
 import { AuthServiceService } from './auth/auth-service.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     EmptyRecipeComponent,
     RecipeEditComponent,
     AuthComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
